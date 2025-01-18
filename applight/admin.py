@@ -10,8 +10,10 @@ from .models import (
     Testimonials,
     FAQ,
     Block,
-    Contact
+    Contact,
+    FormSubmission
 )
+
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
@@ -48,6 +50,7 @@ class WatchNowAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return True
 
+
 class FeaturesModelInline(admin.TabularInline):
     model = Features
     extra = 1
@@ -61,7 +64,10 @@ class FeaturesCentralAdmin(admin.ModelAdmin):
         if FeaturesCentral.objects.exists():
             return False
 
-        return super().has_add_permission(request)
+@admin.register(FormSubmission)
+class FormSubmissionAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "email", "subject", "submitted_at")
+
     
 admin.site.register(Team)
 admin.site.register(Testimonials)
